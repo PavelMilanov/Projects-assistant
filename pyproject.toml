@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "trello-app"
+version = "0.1.0"
+description = ""
+authors = ["pavel.milanov <pawel.milanov@uandex.ru>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+loguru = "^0.5.3"
+environs = "^9.3.5"
+requests = "^2.26.0"
+APScheduler = "3.7.0"
+docxtpl = "^0.15.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+flake8 = "^4.0.1"
+flake8-builtins = "^1.5.3"
+flake8-docstrings = "^1.6.0"
+flake8-quotes = "^3.3.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
