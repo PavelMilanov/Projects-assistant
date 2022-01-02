@@ -1,14 +1,13 @@
 import requests
-from environs import Env
-
-
-env = Env()
-env.read_env()
+from __init__ import env
 
 
 class TrelloRequest:
     """Request for Trello API."""
     
+    def __init__(self):
+        env.read_env()
+
     params = {
         'key': env('API_KEY'),
         'token': env('API_TOKEN')
@@ -16,8 +15,7 @@ class TrelloRequest:
     done_prod = env('DONE_PROD')
     testing_prod = env('TESTING_PROD')
     testing_dev = env('TESTING_DEV')
-
-
+    
     def get_done_cards(self):
         """Get cards for Done PROD 🎉 list."""
         r = requests.get(

@@ -1,11 +1,8 @@
 import httplib2
 from googleapiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
-from environs import Env
-from pyasn1_modules.rfc2459 import Name
+from __init__ import env
 
-
-env = Env()
 
 class GoogleDriveAssistant:
     
@@ -13,7 +10,6 @@ class GoogleDriveAssistant:
      
     def __init__(self):
         env.read_env()
-    
         credentials = ServiceAccountCredentials.from_json_keyfile_name(
             env('CREDENTIALS_FILE'),
             env.list('SCOPES'))
@@ -72,4 +68,3 @@ class GoogleDriveAssistant:
 if __name__ == '__main__':
     assistant = GoogleDriveAssistant()
     assistant.write_document(assistant.write_heading()) 
-# write_document(write_heading())
