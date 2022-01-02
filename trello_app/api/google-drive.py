@@ -1,18 +1,16 @@
 import httplib2
 from googleapiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
+from environs import Env
 
 
-
-
-SCOPES = ['https://www.googleapis.com/auth/drive']
-CREDENTIALS_FILE = 'token.json'
-DOCUMENT_ID = '1UfCy_-HvZOhqs1tR3U68WRMzExw84XZNDadHtMEQ7Yc'
+env = Env()
+env.read_env()
 
 
 credentials = ServiceAccountCredentials.from_json_keyfile_name(
-    CREDENTIALS_FILE,
-    ['https://www.googleapis.com/auth/drive'])
+    env('CREDENTIALS_FILE'),
+    env.list('SCOPES'))
 httpAuth = credentials.authorize(httplib2.Http())
 service = build('docs', 'v1', http=httpAuth)
 
@@ -65,7 +63,7 @@ def write_heading():
 
 def write_document(requests):
     service.documents().batchUpdate(
-        documentId=DOCUMENT_ID, body={'requests': requests}
+        documentId=env('DOCUMENT_ID'), body={'requests': requests}
     ).execute()
 
 write_document(write_heading())
