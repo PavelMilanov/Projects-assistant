@@ -11,6 +11,10 @@ env.read_env()
 class GoogleDriveAssistant:
     
     service = None
+    paragraph1 = 'Отчет о выполненных задачах с X по X\n'
+    paragraph2 = 'Выполнены:\n'
+    paragraph3 = 'Выполнены, но не проверены:\n'
+    
      
     def __init__(self):
         credentials = ServiceAccountCredentials.from_json_keyfile_name(
@@ -19,21 +23,41 @@ class GoogleDriveAssistant:
         httpAuth = credentials.authorize(httplib2.Http())
         self.service = build('docs', 'v1', http=httpAuth)
 
-    def write_heading(self):
+    def write(self):
         return [
                 {
                     'insertText': {
                         'location': {
                             'index': 1,
                         },
-                        'text': 'Отчет о выполненных задачах с х по у'
+                        'text': self.paragraph1
                     }
-                }, 
+                },
                 {
+                        'insertText': {
+                            'location': {
+                                'index': len(self.paragraph1)+1
+                            },
+                        'text': self.paragraph2
+                        }
+                    },
+                    {
+                        'insertText': {
+                            'location': {
+                                'index': len(self.paragraph1)+len(self.paragraph2)+1
+                            },
+                        'text': self.paragraph3
+                        }
+                    }  
+            ]
+
+    def styles(self):
+        return [
+                    {
                     'updateParagraphStyle': {
                         'range': {
                             'startIndex': 1,
-                            'endIndex':  39
+                            'endIndex':  37
                         },
                         'paragraphStyle': {
                             'namedStyleType': 'NORMAL_TEXT',
@@ -46,7 +70,7 @@ class GoogleDriveAssistant:
                     'updateTextStyle': {
                             'range': {
                                 'startIndex': 1,
-                                'endIndex': 39
+                                'endIndex': 37
                             },
                             'textStyle': {
                                 'bold': True,
@@ -60,9 +84,22 @@ class GoogleDriveAssistant:
                             },
                             'fields': '*'
                         }
-            }
+                }
             ]
 
+    def clear_document(self):
+        return [
+            {
+                'deleteContentRange': {
+                    'range': {
+                        'startIndex': 1,
+                        'endIndex': len(self.paragraph1)+len(self.paragraph2)+len(self.paragraph3)
+                    }
+                }
+            }
+        ]
+        
+ 
     def write_document(self,requests):
         self.service.documents().batchUpdate(
             documentId=env('DOCUMENT_ID'), body={'requests': requests}
@@ -70,4 +107,8 @@ class GoogleDriveAssistant:
 
 if __name__ == '__main__':
     assistant = GoogleDriveAssistant()
-    assistant.write_document(assistant.write_heading()) 
+    assistant.write_document(assistant.write())
+    assistant.write_document(assistant.clear_document())
+    assistant.write_document(assistant.write())
+    assistant.write_document(assistant.clear_document())
+    
