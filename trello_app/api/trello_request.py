@@ -53,8 +53,3 @@ class TrelloRequest:
             print(r.status_code)
         else:
             print(r.status_code)
-
-if __name__ == '__main__':
-    trello = TrelloRequest()
-    # trello.archive_done_cards()
-    trello.get_testing_prod_cards()
