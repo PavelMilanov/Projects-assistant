@@ -7,22 +7,21 @@ env.read_env()
 
 
 class TrelloRequest:
-    """Request for Trello by Trello API."""
+    """Request for Trello API."""
     
     params = {
         'key': env('API_KEY'),
         'token': env('API_TOKEN')
     }
     done_prod = env('DONE_PROD')
+    testing_prod = env('TESTING_PROD')
+    testing_dev = env('TESTING_DEV')
 
-
-    def __init__(self):
-        pass
 
     def get_done_cards(self):
         """Get cards for Done PROD 🎉 list."""
         r = requests.get(
-            'https://trello.com/1/lists/5fde6c0e6837394e7ec3ea2d/cards?',
+            f'https://trello.com/1/lists/{self.done_prod}/cards?',
             params=self.params
         )
         print(r.text)
@@ -31,7 +30,7 @@ class TrelloRequest:
     def get_testing_prod_cards(self):
         """Get cards for Testing PROD list"""
         r = requests.get(
-            'https://trello.com/1/lists/5fde8524864ca6204bd273e2/cards?',
+            f'https://trello.com/1/lists/{self.testing_prod}/cards?',
             params=self.params
         )
         print(r.text)
@@ -40,7 +39,7 @@ class TrelloRequest:
     def get_testing_dev_cards(self):
         """Get cards for Testing DEV list"""
         r = requests.get(
-            'https://trello.com/1/lists/5fde6c0e6837394e7ec3ea2c/cards?',
+            f'https://trello.com/1/lists/{self.testing_dev}/cards?',
             params=self.params
         )
         print(r.text)
