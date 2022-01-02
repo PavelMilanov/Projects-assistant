@@ -2,68 +2,74 @@ import httplib2
 from googleapiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
 from environs import Env
+from pyasn1_modules.rfc2459 import Name
 
 
 env = Env()
-env.read_env()
 
+class GoogleDriveAssistant:
+    
+    service = None
+     
+    def __init__(self):
+        env.read_env()
+    
+        credentials = ServiceAccountCredentials.from_json_keyfile_name(
+            env('CREDENTIALS_FILE'),
+            env.list('SCOPES'))
+        httpAuth = credentials.authorize(httplib2.Http())
+        self.service = build('docs', 'v1', http=httpAuth)
 
-credentials = ServiceAccountCredentials.from_json_keyfile_name(
-    env('CREDENTIALS_FILE'),
-    env.list('SCOPES'))
-httpAuth = credentials.authorize(httplib2.Http())
-service = build('docs', 'v1', http=httpAuth)
-
-# Получаем содержимое документа
-# document = service.documents().get(documentId=DOCUMENT_ID).execute()
-
-def write_heading():
-    return [
-            {
-                'insertText': {
-                    'location': {
-                        'index': 1,
-                    },
-                    'text': 'Отчет о выполненных задачах с х по у'
-                }
-            }, 
-            {
-                'updateParagraphStyle': {
-                    'range': {
-                        'startIndex': 1,
-                        'endIndex':  39
-                    },
-                    'paragraphStyle': {
-                        'namedStyleType': 'NORMAL_TEXT',
-                        'alignment': 'CENTER'
-                    },
-                    'fields': 'namedStyleType, alignment'
+    def write_heading(self):
+        return [
+                {
+                    'insertText': {
+                        'location': {
+                            'index': 1,
+                        },
+                        'text': 'Отчет о выполненных задачах с х по у'
                     }
-            },
-            {
-                'updateTextStyle': {
+                }, 
+                {
+                    'updateParagraphStyle': {
                         'range': {
                             'startIndex': 1,
-                            'endIndex': 39
+                            'endIndex':  39
                         },
-                        'textStyle': {
-                            'bold': True,
-                            'weightedFontFamily': {
-                            'fontFamily': 'Times New Roman'
+                        'paragraphStyle': {
+                            'namedStyleType': 'NORMAL_TEXT',
+                            'alignment': 'CENTER'
                         },
-                            'fontSize': {
-                                'magnitude': 14,
-                                'unit': 'PT'
-                            }
-                        },
-                        'fields': '*'
-                    }
-        }
-        ]
+                        'fields': 'namedStyleType, alignment'
+                        }
+                },
+                {
+                    'updateTextStyle': {
+                            'range': {
+                                'startIndex': 1,
+                                'endIndex': 39
+                            },
+                            'textStyle': {
+                                'bold': True,
+                                'weightedFontFamily': {
+                                'fontFamily': 'Times New Roman'
+                            },
+                                'fontSize': {
+                                    'magnitude': 14,
+                                    'unit': 'PT'
+                                }
+                            },
+                            'fields': '*'
+                        }
+            }
+            ]
 
-def write_document(requests):
-    service.documents().batchUpdate(
-        documentId=env('DOCUMENT_ID'), body={'requests': requests}
-    ).execute()
+    def write_document(self,requests):
+        self.service.documents().batchUpdate(
+            documentId=env('DOCUMENT_ID'), body={'requests': requests}
+        ).execute()
 
-write_document(write_heading())
+if __name__ == '__main__':
+    assistant = GoogleDriveAssistant()
+    assistant.write_document(assistant.write_heading()) 
+# write_document(write_heading())
