@@ -7,7 +7,6 @@ from environs import Env
 env = Env()
 env.read_env()
 
-
 class GoogleDriveAssistant:
     
     service = None
@@ -17,13 +16,20 @@ class GoogleDriveAssistant:
     
      
     def __init__(self):
+        
         credentials = ServiceAccountCredentials.from_json_keyfile_name(
             env('CREDENTIALS_FILE'),
             env.list('SCOPES'))
         httpAuth = credentials.authorize(httplib2.Http())
         self.service = build('docs', 'v1', http=httpAuth)
+        
+    def create_list_tasks(self, cards: list):
+        tasks = [card['name'] for card in cards]
+        print(tasks)
+
 
     def write(self):
+        
         """Write text in document."""
         
         return [
@@ -33,8 +39,8 @@ class GoogleDriveAssistant:
                             'index': 1,
                         },
                         'text': self.paragraph1
-                    }
-                },
+                        }
+                    },
                     {
                         'insertText': {
                             'location': {
@@ -46,11 +52,28 @@ class GoogleDriveAssistant:
                     {
                         'insertText': {
                             'location': {
-                                'index': 40
+                                'index': 49
                             },
-                        'text': 'text1'
+                        'text': 'text1\n'
                         }
                     },
+                    {
+                        'insertText': {
+                            'location': {
+                                'index': 55
+                            },
+                        'text': 'text2\n'
+                        }
+                    },
+                    {
+                        'createParagraphBullets': {
+                            'range': {
+                                'startIndex': 49,
+                                'endIndex': 61
+                            },
+                            'bulletPreset': 'NUMBERED_DECIMAL_NESTED',
+                        }
+                    }
                 
                     # {
                     #     'insertText': {
@@ -70,7 +93,7 @@ class GoogleDriveAssistant:
                     'updateParagraphStyle': {
                         'range': {
                             'startIndex': 1,
-                            'endIndex':  37
+                            'endIndex':  len(self.paragraph1)
                         },
                         'paragraphStyle': {
                             'namedStyleType': 'NORMAL_TEXT',
@@ -83,7 +106,7 @@ class GoogleDriveAssistant:
                     'updateTextStyle': {
                             'range': {
                                 'startIndex': 1,
-                                'endIndex': 37
+                                'endIndex': len(self.paragraph1)
                             },
                             'textStyle': {
                                 'bold': True,
@@ -122,7 +145,8 @@ class GoogleDriveAssistant:
 
 if __name__ == '__main__':
     assistant = GoogleDriveAssistant()
-    assistant.write_document(assistant.write())
+    # assistant.write_document(assistant.write())
+    # assistant.write_document(assistant.styles())
     # assistant.write_document(assistant.clear())
 
     
