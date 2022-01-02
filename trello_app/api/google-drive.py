@@ -24,8 +24,10 @@ class GoogleDriveAssistant:
         self.service = build('docs', 'v1', http=httpAuth)
 
     def write(self):
+        """Write text in document."""
+        
         return [
-                {
+                    {
                     'insertText': {
                         'location': {
                             'index': 1,
@@ -33,7 +35,7 @@ class GoogleDriveAssistant:
                         'text': self.paragraph1
                     }
                 },
-                {
+                    {
                         'insertText': {
                             'location': {
                                 'index': len(self.paragraph1)+1
@@ -44,14 +46,25 @@ class GoogleDriveAssistant:
                     {
                         'insertText': {
                             'location': {
-                                'index': len(self.paragraph1)+len(self.paragraph2)+1
+                                'index': 40
                             },
-                        'text': self.paragraph3
+                        'text': 'text1'
                         }
-                    }  
+                    },
+                
+                    # {
+                    #     'insertText': {
+                    #         'location': {
+                    #             'index': len(self.paragraph1)+len(self.paragraph2)+1
+                    #         },
+                    #     'text': self.paragraph3
+                    #     }
+                    # }  
             ]
 
     def styles(self):
+        """Set style for text in document."""
+        
         return [
                     {
                     'updateParagraphStyle': {
@@ -87,7 +100,9 @@ class GoogleDriveAssistant:
                 }
             ]
 
-    def clear_document(self):
+    def clear(self):
+        """Clear document"""
+        
         return [
             {
                 'deleteContentRange': {
@@ -108,7 +123,6 @@ class GoogleDriveAssistant:
 if __name__ == '__main__':
     assistant = GoogleDriveAssistant()
     assistant.write_document(assistant.write())
-    assistant.write_document(assistant.clear_document())
-    assistant.write_document(assistant.write())
-    assistant.write_document(assistant.clear_document())
+    # assistant.write_document(assistant.clear())
+
     
