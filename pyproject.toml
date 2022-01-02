@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "trello-app"
 version = "0.1.0"
-description = ""
+description = "Trello and Google Drive assistant"
 authors = ["pavel.milanov <pawel.milanov@uandex.ru>"]
 
 [tool.poetry.dependencies]
