@@ -1,13 +1,13 @@
 import requests
-from __init__ import env
+from environs import Env
 
+
+env = Env()
+env.read_env()
 
 class TrelloRequest:
     """Request for Trello API."""
     
-    def __init__(self):
-        env.read_env()
-
     params = {
         'key': env('API_KEY'),
         'token': env('API_TOKEN')
@@ -53,3 +53,7 @@ class TrelloRequest:
             print(r.status_code)
         else:
             print(r.status_code)
+
+if __name__ == '__main__':
+    trello = TrelloRequest()
+    trello.archive_done_cards()
