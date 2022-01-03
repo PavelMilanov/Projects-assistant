@@ -148,19 +148,19 @@ class GoogleDocsManager:
     #         }
     # ]
 
-    def clear(self):
+    @generate_doc
+    def clear(self) -> dict:
         """Clear document"""
         
-        return [
-            {
+        return {
                 'deleteContentRange': {
                     'range': {
                         'startIndex': 1,
-                        'endIndex': len(self.paragraph1)+len(self.paragraph2)+len(self.paragraph3)
+                        'endIndex': self.last_document_index
                     }
                 }
             }
-        ]
+        
     
     @generate_doc
     def write(self, *args: list) -> list:
