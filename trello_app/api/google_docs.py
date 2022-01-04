@@ -27,12 +27,17 @@ def generate_doc(func):
 class GoogleDocsManager:
     """Requests for Google-docs API."""
     
-    paragraph1 = 'Отчет о выполненных задачах за неделю\nВыполнены:\n'
-    paragraph2 = '\nВыполнены:\n'
+    paragraph1 = 'Отчет о выполненных задачах за неделю'
+    paragraph2 = 'Выполнены:\n'
     paragraph3 = 'Выполнены, но не проверены:\n'
-    document_index = len(paragraph1) + len(paragraph2)+1
-    
-    def _generate_paragraph_bullets(self, start_idx, end_idx) -> dict:
+    TEXT = f'{paragraph1}\n{paragraph2}'
+    DEFAULT= TEXT
+    document_index = len(TEXT)
+    end_list1_index = 0
+    start_list2_index = 0
+    end_list2_index = 0
+
+    def generate_paragraph_bullets(self) -> list:
         """Converts words on a new line to a list in a given range.
 
         Before:
@@ -44,15 +49,27 @@ class GoogleDocsManager:
             2. word2
         """
         
-        return {
+        return [
+                {
                     'createParagraphBullets': {
                         'range': {
-                            'startIndex': start_idx,
-                            'endIndex': end_idx
+                            'startIndex': len(self.DEFAULT)+1,
+                            'endIndex': self.end_list1_index
+                        },
+                        'bulletPreset': 'NUMBERED_DECIMAL_NESTED',
+                    }
+                },
+                {
+                    'createParagraphBullets': {
+                        'range': {
+                            'startIndex': self.start_list2_index+1,
+                            'endIndex': self.end_list2_index
                         },
                         'bulletPreset': 'NUMBERED_DECIMAL_NESTED',
                     }
                 }
+                
+            ]
 
     def _create_list_tasks(self, cards: list) -> list:
         """Get descriptions from Trello cards."""
@@ -60,60 +77,37 @@ class GoogleDocsManager:
     
     def _generate_tasks_for_document(self, cards: list) -> list:
         """Generate response from card's descriptions."""
-        first_index = self.document_index
+        self.start_list_idx = self.document_index
         tasks = self._create_list_tasks(cards)
-        response = []
+        text = ''
         for item in tasks:
-            template = {
-                'insertText': {
-                    'location': {
-                        'index': self.document_index
-                    },
-                        'text': f'{item}\n'
-                }
-            }
-            self.document_index += len(template['insertText']['text'])
-            response.append(template)
-        response.append(self._generate_paragraph_bullets(first_index, self.document_index))
-        return response
+            text += f'{item}\n'
+        self.end_list_idx = self.start_list_idx + len(text)
+        return text
     
-    def _generate_header(self) -> list:
+    def generate_text(self, *text) -> list:
         """Generate paragraph1-2."""
-        return [
+        self.TEXT += text[0] # карточки Done PROD
+        self.end_list1_index = len(self.TEXT)
+        self.TEXT += self.paragraph3
+        self.start_list2_index = len(self.TEXT)
+        self.TEXT += text[1] # карточки Testing PROD
+        self.TEXT += text[2] # карточки Deploy PROD
+        self.TEXT += text[3] # карточки Testing DEV
+        self.end_list2_index = len(self.TEXT)
+        request = [    
                     {
                         'insertText': {
                             'location': {
                                 'index': 1,
                             },
-                            'text': self.paragraph1
+                            'text': self.TEXT
                         }
-                    },
-                    # {
-                    #     'insertText': {
-                    #         'location': {
-                    #             'index': len(self.paragraph1)
-                    #         },
-                    #         'text': self.paragraph2
-                    #     }
-                    # }
+                    }
                 ]
-    
-    def _generate_paragraph3(self) -> list:
-        response = [
-                    {
-                        'insertText': {
-                            'location': {
-                                'index': self.document_index+1
-                            },
-                            'text': self.paragraph3
-                        }
-                    } 
-                ]
-        self.document_index += len(self.paragraph3)+1
-        return response
-
+        return request
         
-    def _generate_styles(self):
+    def generate_styles(self):
         """Set style for text in document."""
 
         return [
@@ -121,7 +115,7 @@ class GoogleDocsManager:
                     'updateParagraphStyle': {
                         'range': {
                             'startIndex': 1,
-                            'endIndex':  len(self.paragraph1)
+                            'endIndex':  len(self.paragraph1)+1
                         },
                         'paragraphStyle': {
                             'namedStyleType': 'NORMAL_TEXT',
@@ -134,7 +128,7 @@ class GoogleDocsManager:
                     'updateTextStyle': {
                             'range': {
                                 'startIndex': 1,
-                                'endIndex': len(self.paragraph1)
+                                'endIndex': len(self.paragraph1)+1
                             },
                             'textStyle': {
                                 'bold': True,
@@ -154,7 +148,12 @@ class GoogleDocsManager:
     @generate_doc
     def clear(self) -> dict:
         """Clear document"""
-        response = {
+        self.document_index = len(self.TEXT)
+        self.TEXT = self.DEFAULT
+        self.end_list1_index = 0
+        self.start_list2_index = 0
+        self.end_list2_index = 0
+        return {
                 'deleteContentRange': {
                     'range': {
                         'startIndex': 1,
@@ -162,8 +161,6 @@ class GoogleDocsManager:
                     }
                 }
             }
-        self.document_index = len(self.paragraph1) + len(self.paragraph2)+1
-        return response
 
     @generate_doc
     def write(self, request) -> list:

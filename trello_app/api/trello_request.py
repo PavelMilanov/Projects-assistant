@@ -13,6 +13,7 @@ class TrelloManager:
         'token': env('API_TOKEN')
     }
     done_prod = env('DONE_PROD')
+    deploy_prod = env('DEPLOY_PROD')
     testing_prod = env('TESTING_PROD')
     testing_dev = env('TESTING_DEV')
     
@@ -26,7 +27,7 @@ class TrelloManager:
         return data
     
     def get_testing_prod_cards(self) -> list:
-        """Get cards for Testing PROD list"""
+        """Get cards for Testing PROD list."""
         r = requests.get(
             f'https://trello.com/1/lists/{self.testing_prod}/cards?',
             params=self.params
@@ -35,13 +36,22 @@ class TrelloManager:
         return data
     
     def get_testing_dev_cards(self) -> list:
-        """Get cards for Testing DEV list"""
+        """Get cards for Testing DEV list."""
         r = requests.get(
             f'https://trello.com/1/lists/{self.testing_dev}/cards?',
             params=self.params
         )
         data = r.json()
-        return data        
+        return data
+    
+    def get_deploing_prod_cards(self) -> list:
+        """Get cards for deploy PROD list."""
+        r = requests.get(
+            f'https://trello.com/1/lists/{self.deploy_prod}/cards?',
+            params=self.params
+        )
+        data = r.json()
+        return data
 
     def archive_done_cards(self):
         """Archive all cards for Done PROD 🎉."""
