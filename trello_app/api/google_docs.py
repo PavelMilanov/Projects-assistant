@@ -27,8 +27,8 @@ def generate_doc(func):
 class GoogleDocsManager:
     """Requests for Google-docs API."""
     
-    paragraph1 = 'Отчет о выполненных задачах за неделю\n'
-    paragraph2 = 'Выполнены:\n'
+    paragraph1 = 'Отчет о выполненных задачах за неделю\nВыполнены:\n'
+    paragraph2 = '\nВыполнены:\n'
     paragraph3 = 'Выполнены, но не проверены:\n'
     document_index = len(paragraph1) + len(paragraph2)+1
     
@@ -88,14 +88,14 @@ class GoogleDocsManager:
                             'text': self.paragraph1
                         }
                     },
-                    {
-                        'insertText': {
-                            'location': {
-                                'index': len(self.paragraph1)+1,
-                            },
-                            'text': self.paragraph2
-                        }
-                    }
+                    # {
+                    #     'insertText': {
+                    #         'location': {
+                    #             'index': len(self.paragraph1)
+                    #         },
+                    #         'text': self.paragraph2
+                    #     }
+                    # }
                 ]
     
     def _generate_paragraph3(self) -> list:
