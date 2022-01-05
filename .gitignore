@@ -1,5 +1,7 @@
 .env
 .venv
+poetry.lock
+../.DS_Store
 __pycache__
 debug
 token.json
