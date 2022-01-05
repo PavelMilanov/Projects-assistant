@@ -148,7 +148,9 @@ class GoogleDocsManager:
     @generate_doc
     def clear(self) -> dict:
         """Clear document"""
-        self.document_index = len(self.TEXT)
+        # запрос на последний индекс документа
+        last_index = int(service.documents().get(
+            documentId=env('DOCUMENT_ID')).execute()['body']['content'][-1]['endIndex'])
         self.TEXT = self.DEFAULT
         self.end_list1_index = 0
         self.start_list2_index = 0
@@ -157,7 +159,7 @@ class GoogleDocsManager:
                 'deleteContentRange': {
                     'range': {
                         'startIndex': 1,
-                        'endIndex': self.document_index+1
+                        'endIndex': last_index-1
                     }
                 }
             }
