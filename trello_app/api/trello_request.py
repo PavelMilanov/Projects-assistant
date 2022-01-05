@@ -5,9 +5,10 @@ from environs import Env
 env = Env()
 env.read_env()
 
+
 class TrelloManager:
     """Requests for Trello API."""
-            
+
     params = {
         'key': env('API_KEY'),
         'token': env('API_TOKEN')
@@ -16,7 +17,7 @@ class TrelloManager:
     deploy_prod = env('DEPLOY_PROD')
     testing_prod = env('TESTING_PROD')
     testing_dev = env('TESTING_DEV')
-    
+
     def get_done_cards(self) -> list:
         """Get cards for Done PROD 🎉 list."""
         r = requests.get(
@@ -25,7 +26,7 @@ class TrelloManager:
         )
         data = r.json()
         return data
-    
+
     def get_testing_prod_cards(self) -> list:
         """Get cards for Testing PROD list."""
         r = requests.get(
@@ -34,7 +35,7 @@ class TrelloManager:
         )
         data = r.json()
         return data
-    
+
     def get_testing_dev_cards(self) -> list:
         """Get cards for Testing DEV list."""
         r = requests.get(
@@ -43,7 +44,7 @@ class TrelloManager:
         )
         data = r.json()
         return data
-    
+
     def get_deploing_prod_cards(self) -> list:
         """Get cards for deploy PROD list."""
         r = requests.get(
