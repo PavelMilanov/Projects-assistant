@@ -7,13 +7,14 @@ sudo apt install  -y git
 echo "установка Python pip"
 sudo apt install -y python3-pip
 echo "установка poetry"
-sudo pip3 install -y poetry
+sudo pip3 install poetry
 echo "настройка виртуального окружения poetry"
 poetry config virtualenvs.in-project true
 echo "установка NodeJS 16.x"
 url=https://deb.nodesource.com/setup_16.x
 curl -sL {{url}} | sudo bash -
 sudo apt install -y nodejs
+sudo apt install -y npm
 echo 'готово!'
 python3.10 --version
 git --version
