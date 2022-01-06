@@ -10,4 +10,8 @@ echo "установка poetry"
 sudo pip3 install -y poetry
 echo "настройка виртуального окружения poetry"
 poetry config virtualenvs.in-project true
+echo "установка NodeJS 16.x"
+url=https://deb.nodesource.com/setup_16.x
+curl -sL {{url}} | sudo bash -
+sudo apt install -y nodejs
 echo 'готово!'
