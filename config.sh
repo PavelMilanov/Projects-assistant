@@ -15,3 +15,8 @@ url=https://deb.nodesource.com/setup_16.x
 curl -sL {{url}} | sudo bash -
 sudo apt install -y nodejs
 echo 'готово!'
+python3.10 --version
+git --version
+poetry --version
+node -v
+npm -v
