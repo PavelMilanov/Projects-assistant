@@ -18,6 +18,7 @@ class TUI:
 1. Заархивировать карточки;
 2. Составить отчет;
 3. Очистить документ;
+4. Загрузить в архив;
 """
         print(screen)
 
@@ -47,6 +48,8 @@ class TUI:
                     google_doc.write(style)
                 elif menu_value == '3':
                     google_doc.clear()
+                elif menu_value == '4':
+                    google_doc.download_document()
 
         except KeyboardInterrupt:
             pass

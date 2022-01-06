@@ -1,6 +1,10 @@
+import io
+import os
 import httplib2
+from datetime import datetime
 from googleapiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
+from googleapiclient.http import MediaIoBaseDownload
 from environs import Env
 
 
@@ -13,8 +17,7 @@ credentials = ServiceAccountCredentials.from_json_keyfile_name(
     env.list('SCOPES'))
 httpAuth = credentials.authorize(httplib2.Http())
 service = build('docs', 'v1', http=httpAuth)
-#
-
+drive_service = build('drive', 'v3', http=httpAuth)
 
 def generate_doc(func):  # noqa D103
     def wrapper(*args):
@@ -139,7 +142,18 @@ class GoogleDocsManager:
                         'fields': '*'
                 }
             }]
-
+        
+    def download_document(self):
+        request = drive_service.files().export_media(fileId=env('DOCUMENT_ID'),
+            mimeType='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+        current_directory = os.getcwd() + '/archive/'
+        date = datetime.date(datetime.now())
+        fh = io.FileIO(current_directory + f'отчет {date}', 'wb')
+        downloader = MediaIoBaseDownload(fh, request)
+        done = False
+        while done is False:
+            done = downloader.next_chunk()
+        
     @generate_doc
     def clear(self) -> dict:
         """Clear document."""
