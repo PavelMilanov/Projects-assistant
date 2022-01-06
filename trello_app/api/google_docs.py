@@ -78,13 +78,16 @@ class GoogleDocsManager:
 
     def _generate_tasks_for_document(self, cards: list) -> list:
         """Generate response from card's descriptions."""
-        self.start_list_idx = self.document_index
-        tasks = self._create_list_tasks(cards)
-        text = ''
-        for item in tasks:
-            text += f'{item}\n'
-        self.end_list_idx = self.start_list_idx + len(text)
-        return text
+        if len(cards) > 0:
+            self.start_list_idx = self.document_index
+            tasks = self._create_list_tasks(cards)
+            text = ''
+            for item in tasks:
+                text += f'{item}\n'
+            self.end_list_idx = self.start_list_idx + len(text)
+            return text
+        else: 
+            return None
 
     def generate_text(self, *text) -> list:
         """Generate paragraph1-2."""
