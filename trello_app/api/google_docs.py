@@ -79,12 +79,17 @@ class GoogleDocsManager:
     def _generate_tasks_for_document(self, cards: list) -> list:
         """Generate response from card's descriptions."""
         self.start_list_idx = self.document_index
-        tasks = self._create_list_tasks(cards)
-        text = ''
-        for item in tasks:
-            text += f'{item}\n'
-        self.end_list_idx = self.start_list_idx + len(text)
-        return text
+        if len(cards) > 0:
+            tasks = self._create_list_tasks(cards)
+            text = ''
+            for item in tasks:
+                text += f'{item}\n'
+            self.end_list_idx = self.start_list_idx + len(text)
+            return text
+        else: 
+            text = 'Выполненных задач нет\n'
+            self.end_list_idx = self.start_list_idx + len(text)
+            return text
 
     def generate_text(self, *text) -> list:
         """Generate paragraph1-2."""
@@ -146,7 +151,7 @@ class GoogleDocsManager:
     def download_document(self):
         request = drive_service.files().export_media(fileId=env('DOCUMENT_ID'),
             mimeType='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-        current_directory = os.getcwd() + '/archive/'
+        current_directory = os.getcwd()[:-7] + '/archive/' # /trello_app/archive/
         date = datetime.date(datetime.now())
         fh = io.FileIO(current_directory + f'отчет {date}', 'wb')
         downloader = MediaIoBaseDownload(fh, request)
