@@ -1,9 +1,12 @@
-import './App.css';
+import { Main } from './Main';
+import { Asside } from './Asside';
+
 
 function App() {
   return (
     <div className="App">
-      hello world      
+      <Asside />
+      <Main />
     </div>
   );
 }
