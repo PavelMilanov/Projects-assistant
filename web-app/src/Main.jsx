@@ -9,12 +9,16 @@ class Main extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="container">
                 <header>
-                    This is the main menu</header>
+                    <div className="header-menu">
+                        <p>This is the main menu</p>
+                        <button>Log In</button>
+                    </div>
+                </header>
                 <main>
-                    <div className="menu">
-                        <li className="menu-list">
+                    <div className="main-menu">
+                        <li className="list-menu">
                             <button className="menu-btn">Сделать отчет</button>
                             <button className="menu-btn">Архивировать карточки</button>
                             <button className="menu-btn">Отправить документ в архив</button>

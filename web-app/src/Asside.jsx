@@ -1,5 +1,5 @@
 import React from "react";
-import './Asside.css';
+import './Asside.scss';
 
 
 class Asside extends React.Component {
@@ -9,7 +9,7 @@ class Asside extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="container">
                 <header>
                     This is the status bar</header>
                 <main>

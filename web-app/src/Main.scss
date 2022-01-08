@@ -1,4 +1,9 @@
-.menu-list {
+.header-menu {
+    display: flex;
+    justify-content: space-around;
+}
+
+.list-menu {
     margin: 0.2em;
     display: grid;
     gap: 0.3em;
