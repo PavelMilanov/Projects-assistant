@@ -1,5 +1,5 @@
 import React from "react";
-import './Main.scss';
+import '../styles/Main.scss'
 
 
 class Main extends React.Component {
@@ -9,14 +9,11 @@ class Main extends React.Component {
 
     render() {
         return (
-            <div className="container">
-                <header>
-                    <div className="header-menu">
-                        <p>This is the main menu</p>
-                        <button>Log In</button>
-                    </div>
-                </header>
-                <main>
+            <div className="Main">
+                <div>
+                    <p>This is the main menu</p>
+                </div>
+                <div>
                     <div className="main-menu">
                         <li className="list-menu">
                             <button className="menu-btn">Сделать отчет</button>
@@ -25,7 +22,7 @@ class Main extends React.Component {
                             <button className="menu-btn">Очистить документ</button>
                         </li>
                     </div>
-                </main>
+                </div>
             </div>
         )
     }
