@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from backend import services, auth, database
 from environs import Env
@@ -7,8 +8,19 @@ from environs import Env
 
 env = Env()
 env.read_env()
-app = FastAPI(title='Project Assistant', version='0.1.1')
+
+app = FastAPI(title='Project Assistant', version='0.1.2')
 auth_scheme = OAuth2PasswordBearer(tokenUrl='/login')
+
+origins = ['http://localhost:3000']  # React
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*'],
+)
 
 @app.post('/login')  # тестовый режим
 async def login(form: OAuth2PasswordRequestForm = Depends()):
