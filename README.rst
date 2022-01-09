@@ -5,4 +5,4 @@ API и Google Drive API.
 Пользовательский интерфейс реализован как на FastAPI при помощи OpenAPI, так и ReactJS.
 
     Backend-сервер: FastAPI;
-    Frontend-сервер: ReactJS; 
+    Frontend-сервер: Vue3JS; 
