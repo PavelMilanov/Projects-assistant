@@ -26,14 +26,17 @@ class Auth: # noqa D101
         )
         return token
 
-    # def decode_token(self, token):
-    #     """Decode token from function - create_token."""
-    #     return jwt.decode(token, env('SECRET'), algorithm=env('ALGORITHM'))
+    @staticmethod
+    def decode_token(token):
+        """Decode token from function - create_token."""
+        return jwt.decode(token, env('SECRET'), algorithm=env('ALGORITHM'))
 
-    # def hash_password(self, password):
-    #     """Hashed password by algorithm."""
-    #     return pwd_hash.hash(password)
+    @staticmethod
+    def hash_password(password):
+        """Hashed password by algorithm."""
+        return pwd_hash.hash(password)
 
-    # def verify_password(self, password, hash_password):
-    #     """Verify password from function - hash_password."""
-    #     return pwd_hash.verify(password, hash_password)
+    @staticmethod
+    def verify_password(password, hash_password):
+        """Verify password from function - hash_password."""
+        return pwd_hash.verify(password, hash_password)
