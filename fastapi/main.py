@@ -12,7 +12,7 @@ env.read_env()
 app = FastAPI(title='Project Assistant', version='0.1.2')
 auth_scheme = OAuth2PasswordBearer(tokenUrl='/login')
 
-origins = ['http://localhost:3000']  # React
+origins = ['http://localhost:8080']  # Vue
 
 app.add_middleware(
     CORSMiddleware,
