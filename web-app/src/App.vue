@@ -10,7 +10,7 @@
       <main>
         <vForm 
         :status="status"
-        @closeForm="closeForm()"/>
+        @closeForm="closeForm()"/> 
         <vAsside />
         <vMain />
       </main>
@@ -27,6 +27,7 @@ export default {
   name: 'App',
   data() {
         return {
+          // для стиля компонента vForm
           status: 'hidden',
         }
     },

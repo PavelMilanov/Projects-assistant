@@ -5,11 +5,26 @@
         </div>
         <div>
             <div class="main-menu">
+                <div class="status-bar">
+                    <p>{{status_text ? status_text : ''}}</p>
+                </div>
                 <li class="list-menu">
-                    <button class="menu-btn">Сделать отчет</button>
-                    <button class="menu-btn">Архивировать карточки</button>
-                    <button class="menu-btn">Отправить документ в архив</button>
-                    <button class="menu-btn">Очистить документ</button>
+                    <button
+                        @click="generate_doc()" 
+                        class="menu-btn">Сделать отчет
+                    </button>
+                    <button
+                        @click="archive_cards()" 
+                        class="menu-btn">Архивировать карточки
+                    </button>
+                    <button
+                        @click="download_doc()" 
+                        class="menu-btn">Отправить документ в архив
+                    </button>
+                    <button
+                        @click="clear_doc()" 
+                        class="menu-btn">Очистить документ
+                    </button>
                 </li>
             </div>
         </div>
@@ -21,9 +36,25 @@
 export default {
     data() {
         return {
-            
+            status_text: this.$store.getters.GET_INFO,
+            token: this.$store.getters.GET_USER.token
         }
     },
+    methods: {
+        generate_doc() {
+            this.$store.dispatch('GENERATE_DOCUMENT', this.token);
+            let test = setTimeout(() => console.log(this.$store.getters.GET_INFO), 10)
+        },
+        clear_doc() {
+            this.$store.dispatch('CLEAR_DOCUMENT', this.token);
+        },
+        download_doc() {
+            this.$store.dispatch('DOWNLOAD_DOCUMENT', this.token);
+        },
+        archive_cards() {
+            this.$store.dispatch('ARCHIVE_CARDS', this.token);
+        },
+    }
 }
 </script>
 

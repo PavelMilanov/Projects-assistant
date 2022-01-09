@@ -28,7 +28,7 @@
 
 export default {
     name: 'vForm',
-    props: ['status'], 
+    props: ['status'], /*получает это значение стиля от родителя*/ 
     data() {
         return {
             form: {
@@ -41,6 +41,7 @@ export default {
         login () {
             this.$store.dispatch("LOGIN", this.form)
             this.clear_input()
+            this.closeForm()
         },
 
         clear_input() {
@@ -49,7 +50,7 @@ export default {
         },
 
         closeForm () {
-            this.$emit('closeForm', 'hidden')
+            this.$emit('closeForm',) /* создаем кастомное событие для родительского компонента */
         }
     }
 }
