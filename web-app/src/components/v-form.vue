@@ -1,6 +1,8 @@
 <template>
-    <div class="Form">
-        <a href="#" class="btn-exit">X
+    <div class="Form" :style="{visibility: status}">
+        <a
+        @click="closeForm()" 
+        href="#" class="btn-exit">X
         </a>
         <input
             v-model.lazy="form.username" 
@@ -25,23 +27,29 @@
 <script>
 
 export default {
+    name: 'vForm',
+    props: ['status'], 
     data() {
         return {
             form: {
                 username: null,
                 password: null
-            }
+            },
         }
     },
-
     methods: {
         login () {
             this.$store.dispatch("LOGIN", this.form)
+            this.clear_input()
         },
 
         clear_input() {
             this.form.username = null
             this.form.password = null
+        },
+
+        closeForm () {
+            this.$emit('closeForm', 'hidden')
         }
     }
 }
@@ -50,7 +58,6 @@ export default {
 <style lang="less">
 
 .Form {
-    visibility: visible;
     position: absolute;
     left: 25%;
     top: 25%;

@@ -5,7 +5,6 @@ import qs from 'qs';
 
 export default createStore({
   state: {
-
     user: {
       is_authenticated: false,
       token: '',
@@ -19,7 +18,7 @@ export default createStore({
   mutations: {
     SET_USER_TOKEN: (state, data) => {
       state.user.token = data
-    }
+    },
   },
   actions: {
     LOGIN: async (context, data) => {
@@ -37,6 +36,7 @@ export default createStore({
         }).catch( (error) => {
             console.log(error);
         })
-    }
-  }
+    },
+
+  },
 })

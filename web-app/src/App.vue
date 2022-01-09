@@ -2,10 +2,15 @@
   <div class="App">
       <header>
         <p>header</p>
-        <button>Log In</button>
+        <button
+          @click="openForm()"
+          >Log In
+        </button>
       </header>
       <main>
-        <vForm />
+        <vForm 
+        :status="status"
+        @closeForm="closeForm()"/>
         <vAsside />
         <vMain />
       </main>
@@ -22,7 +27,7 @@ export default {
   name: 'App',
   data() {
         return {
-        
+          status: 'hidden',
         }
     },
   components: {
@@ -30,10 +35,18 @@ export default {
     vAsside,
     vForm
   },
-
+ 
   methods: {
+    openForm() {
+      this.status = 'visible';
+    },
 
-  }
+    closeForm() {
+      this.status = 'hidden';
+    }
+
+  },
+
 }
 </script>
 
