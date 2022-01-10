@@ -34,6 +34,7 @@ class GoogleDocsManager:
     paragraph1 = 'Отчет о выполненных задачах за неделю'
     paragraph2 = 'Выполнены:\n'
     paragraph3 = 'Выполнены, но не проверены:\n'
+    empty_string = 'Выполненных задач нет\n'
     TEXT = f'{paragraph1}\n{paragraph2}'
     DEFAULT = TEXT
     document_index = len(TEXT)
@@ -87,7 +88,7 @@ class GoogleDocsManager:
             self.end_list_idx = self.start_list_idx + len(text)
             return text
         else: 
-            text = 'Выполненных задач нет\n'
+            text = self.empty_string
             self.end_list_idx = self.start_list_idx + len(text)
             return text
 
@@ -99,7 +100,8 @@ class GoogleDocsManager:
         self.start_list2_index = len(self.TEXT)
         self.TEXT += text[1]  # карточки Testing PROD
         self.TEXT += text[2]  # карточки Deploy PROD
-        self.TEXT += text[3]  # карточки Testing DEV
+        if text[3] != self.empty_string:
+            self.TEXT += text[3]  # карточки Testing DEV
         self.end_list2_index = len(self.TEXT)
         return [    
                 {
@@ -178,6 +180,9 @@ class GoogleDocsManager:
                 }}
 
     @generate_doc
-    def write(self, request) -> list:
+    def write(self, *args) -> list:
         """Write text in document."""
+        request = []
+        for item in args:
+            request += item
         return request
