@@ -1,5 +1,5 @@
 from apscheduler.schedulers.background import BackgroundScheduler
-from .services import generate_doc, archive_cards
+from .services import generate_doc, archive_cards, download_doc
 
 
 scheduler = BackgroundScheduler()
@@ -19,4 +19,11 @@ def scheduler_init():
         'cron',
         day_of_week='mon',
         hour='20',id='2',
+        replace_existing=True)
+    
+    scheduler.add_job(
+        download_doc,
+        'cron',
+        day_of_week='tue',
+        hour='13', minute='58', id='3',
         replace_existing=True)
