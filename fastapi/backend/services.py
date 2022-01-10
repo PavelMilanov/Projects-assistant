@@ -23,15 +23,13 @@ def generate_doc():
         text1, text2, text3, text4)
     lists = google_doc.generate_paragraph_bullets()
     style = google_doc.generate_styles()
-    google_doc.write(request)
-    google_doc.write(lists)
-    google_doc.write(style)
+    google_doc.write(request, lists, style)
+ 
+def clear_doc():
+    google_doc.clear()
 
-async def clear_doc():
-    await google_doc.clear()
+def download_doc():
+    google_doc.download_document()
 
-async def download_doc():
-    await google_doc.download_document()
-
-async def archive_cards():
-    await trello.archive_done_cards()
+def archive_cards():
+    trello.archive_done_cards()

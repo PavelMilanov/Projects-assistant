@@ -25,7 +25,7 @@ app.add_middleware(
 )
 
 @app.post('/login')  # тестовый режим
-async def login(form: OAuth2PasswordRequestForm = Depends()) -> str:
+def login(form: OAuth2PasswordRequestForm = Depends()) -> str:
     """Генерирует персональный токен."""
     login, password = form.username, form.password
     if login != env('LOGIN') or password != env('PASSWORD'):
@@ -47,25 +47,25 @@ async def login(form: OAuth2PasswordRequestForm = Depends()) -> str:
             return access_token
     
 @app.get('/generate')  # тестовый режим
-async def generate(token: str = Depends(auth_scheme)) -> dict:
+def generate(token: str = Depends(auth_scheme)) -> dict:
     """Генериует google document на основании Trello API и Google Drive API."""
-    await services.generate_doc()
+    services.generate_doc()
     return {'message': 'generate doc'}
 
 @app.get('/clear')  # тестовый режим
-async def clear(token: str = Depends(auth_scheme)) -> dict:
+def clear(token: str = Depends(auth_scheme)) -> dict:
     """Стирает все данные google document на основании Trello API и Google Drive API."""
-    await services.clear_doc()
+    services.clear_doc()
     return {'message': 'clear doc'}
 
 @app.get('/download')  # тестовый режим
-async def download(token: str = Depends(auth_scheme)) -> dict:
+def download(token: str = Depends(auth_scheme)) -> dict:
     """Скачивает google document на сервер на основании Google Drive API."""
-    await services.download_doc()
+    services.download_doc()
     return {'message': 'download doc'}
 
 @app.post('/archive')  # тестовый режим
-async def archive(token: str = Depends(auth_scheme)) -> dict:
+def archive(token: str = Depends(auth_scheme)) -> dict:
     """Архивирует все карточки в колонке Trello на основании Trello API."""
-    await services.archive_cards()
+    services.archive_cards()
     return {'message': 'archive card'}
