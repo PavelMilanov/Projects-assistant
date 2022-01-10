@@ -14,9 +14,8 @@ echo "установка NodeJS 16.x"
 url=https://deb.nodesource.com/setup_16.x 
 curl -sL {{url}} -o nodesource_setup.sh
 sudo bash nodesource_setup.sh
-sudo apt install -y nodejs
+sudo apt-get install -y nodejs
 sudo remove nodesource_setup.sh
-sudo apt install -y npm
 echo 'готово!'
 python3.10 --version
 git --version
