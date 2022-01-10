@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from backend import services, auth, database
+from backend import services, auth, database, scheduller, logging
 from environs import Env
 
 
@@ -11,6 +11,8 @@ env.read_env()
 
 app = FastAPI(title='Project Assistant', version='0.1.3')
 auth_scheme = OAuth2PasswordBearer(tokenUrl='/login')
+
+scheduller.scheduler_init()  # start jobs
 
 origins = ['http://localhost:8080']  # Vue
 
