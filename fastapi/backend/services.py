@@ -10,7 +10,7 @@ from trello_app.api import google_docs, trello_request
 trello = trello_request.TrelloManager()
 google_doc = google_docs.GoogleDocsManager()
 
-async def generate_doc():
+def generate_doc():
     text1 = google_doc._generate_tasks_for_document(
         trello.get_done_cards())
     text2 = google_doc._generate_tasks_for_document(
@@ -28,10 +28,10 @@ async def generate_doc():
     google_doc.write(style)
 
 async def clear_doc():
-    google_doc.clear()
+    await google_doc.clear()
 
 async def download_doc():
-    google_doc.download_document()
+    await google_doc.download_document()
 
 async def archive_cards():
-    trello.archive_done_cards()
+    await trello.archive_done_cards()
