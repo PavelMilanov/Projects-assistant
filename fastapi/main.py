@@ -15,17 +15,15 @@ app = FastAPI(
     description='Rest API для Trello API и Google Drive API')
 auth_scheme = OAuth2PasswordBearer(tokenUrl='/login')
 
-scheduller.scheduler_init()  # start jobs
-
-origins = ['http://localhost:8080']  # Vue
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=['*'],
     allow_credentials=True,
     allow_methods=['*'],
     allow_headers=['*'],
 )
+
+scheduller.scheduler_init()  # start jobs
 
 @app.post('/login')
 def login(form: OAuth2PasswordRequestForm = Depends()) -> str:
