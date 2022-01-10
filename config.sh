@@ -1,6 +1,7 @@
 #!/bin/bash
 echo "установка Python 3.10..."
 sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt update
 sudo apt install -y python3.10 python3.10-distutils
 echo "установка Git"
 sudo apt install  -y git
