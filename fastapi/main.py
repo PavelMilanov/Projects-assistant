@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from backend import services, auth, database, scheduller, logging
 from environs import Env
+import uvicorn
 
 
 env = Env()
@@ -11,9 +12,8 @@ env.read_env()
 
 app = FastAPI(
     title='Project Assistant',
-    version='0.2.0',
+    version='0.2.1',
     description='Rest API для Trello API и Google Drive API')
-auth_scheme = OAuth2PasswordBearer(tokenUrl='/login')
 
 app.add_middleware(
     CORSMiddleware,
@@ -24,6 +24,7 @@ app.add_middleware(
 )
 
 scheduller.scheduler_init()  # start jobs
+auth_scheme = OAuth2PasswordBearer(tokenUrl='/login')
 
 @app.post('/login')
 def login(form: OAuth2PasswordRequestForm = Depends()) -> str:
@@ -97,3 +98,7 @@ def archive(token: str = Depends(auth_scheme)) -> dict:
         logging.logger.error(f'{e}')
         return JSONResponse(
             content=f'{e}')
+
+
+if __name__ == '__main__':
+    uvicorn.run('main:app', host='0.0.0.0', reload=True, workers=2)
