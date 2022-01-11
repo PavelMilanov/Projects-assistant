@@ -17,13 +17,12 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['*'],
+    allow_origins=['http://localhost:8080'],  # Vue
     allow_credentials=True,
     allow_methods=['*'],
     allow_headers=['*'],
 )
 
-scheduller.scheduler_init()  # start jobs
 auth_scheme = OAuth2PasswordBearer(tokenUrl='/login')
 
 @app.post('/login')
@@ -103,4 +102,5 @@ def archive(token: str = Depends(auth_scheme)) -> dict:
 if __name__ == '__main__':
     
     logging.logger.info('Старт приложения')
+    scheduller.scheduler.start()
     uvicorn.run('main:app', host='0.0.0.0', reload=True, workers=2)
