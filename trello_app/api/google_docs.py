@@ -154,11 +154,12 @@ class GoogleDocsManager:
             }]
         
     def download_document(self):
+        current_directory = f'{os.getcwd()}/archive/' # /archive/
+        date = datetime.date(datetime.now())
+        
         request = drive_service.files().export_media(fileId=env('DOCUMENT_ID'),
             mimeType='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-        current_directory = os.getcwd()[:-7] + '/archive/' # /trello_app/archive/
-        date = datetime.date(datetime.now())
-        fh = io.FileIO(current_directory + f'отчет {date}', 'wb')
+        fh = io.FileIO(f'{current_directory}отчет {date}.docx', 'wb')
         downloader = MediaIoBaseDownload(fh, request)
         done = False
         while done is False:
