@@ -2,7 +2,7 @@ from loguru import logger
 import sys
 import os
 
-PATH = os.getcwd()[:-7]
+PATH = os.getcwd()
 sys.path.append(PATH)
 
 logger.add(f'{PATH}debug/logs.log', format='{time} {level} {message}',
