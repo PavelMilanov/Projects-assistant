@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from backend import services, auth, database, scheduller, logging
 from environs import Env
+import uvicorn
 
 
 env = Env()
@@ -97,3 +98,7 @@ def archive(token: str = Depends(auth_scheme)) -> dict:
         logging.logger.error(f'{e}')
         return JSONResponse(
             content=f'{e}')
+
+
+if __name__ == '__main__':
+    uvicorn.run('main:app', host='0.0.0.0', reload=True, debug=True, workers=2)
