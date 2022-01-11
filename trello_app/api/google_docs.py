@@ -159,7 +159,7 @@ class GoogleDocsManager:
         
         request = drive_service.files().export_media(fileId=env('DOCUMENT_ID'),
             mimeType='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-        fh = io.FileIO(f'{current_directory}отчет {date}', 'wb')
+        fh = io.FileIO(f'{current_directory}отчет {date}.docx', 'wb')
         downloader = MediaIoBaseDownload(fh, request)
         done = False
         while done is False:
