@@ -1,7 +1,8 @@
 import sys
 import os
 
-PATH = os.getcwd()[:-7]
+PATH = os.getcwd()
+
 sys.path.append(PATH)
 
 from trello_app.api import google_docs, trello_request 
