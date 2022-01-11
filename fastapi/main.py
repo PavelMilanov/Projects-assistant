@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from backend import services, auth, database, scheduller, logging
+from backend import services, auth, database, logging
 from environs import Env
 import uvicorn
 
@@ -100,7 +100,6 @@ def archive(token: str = Depends(auth_scheme)) -> dict:
 
 
 if __name__ == '__main__':
-    
+
     logging.logger.info('Старт приложения')
-    scheduller.scheduler.start()
     uvicorn.run('main:app', host='0.0.0.0', reload=True, workers=2)

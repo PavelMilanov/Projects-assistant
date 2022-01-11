@@ -42,7 +42,3 @@ def download_doc():
                           hour='14', id='1')
 def archive_cards():
     trello.archive_done_cards()
-
-@scheduler.scheduled_job('interval', seconds=5)
-def test():
-    print('test')
