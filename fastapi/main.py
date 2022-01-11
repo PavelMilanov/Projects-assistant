@@ -17,7 +17,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['http://localhost:8080'],
+    allow_origins=['*'],
     allow_credentials=True,
     allow_methods=['*'],
     allow_headers=['*'],
@@ -101,4 +101,5 @@ def archive(token: str = Depends(auth_scheme)) -> dict:
 
 
 if __name__ == '__main__':
+    logging.logger.info('Старт приложения')
     uvicorn.run('main:app', host='0.0.0.0', reload=True, workers=2)
