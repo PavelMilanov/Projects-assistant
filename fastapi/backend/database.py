@@ -18,7 +18,7 @@ class Database:
     @staticmethod
     def insert_files(item: dict):
         try:
-            db.files.replace_one(item, upsert=True)  # insert_meny()
+            db.files.insert_one(item)  # insert_meny()
             return 'запись создана'
         except Exception as e:
             return f'ошибка: {e}'
@@ -53,8 +53,15 @@ class Database:
             return f'ошибка: {e}'
 
     @staticmethod
-    def delete(request: dict):
+    def delete_token(request: dict):
         try:
             db.tokens.delete_one(request)
+        except Exception as e:
+            return f'ошибка: {e}'
+        
+    @staticmethod
+    def delete_file(request: dict):
+        try:
+            db.files.delete_one(request)
         except Exception as e:
             return f'ошибка: {e}'

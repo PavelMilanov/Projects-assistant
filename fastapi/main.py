@@ -12,12 +12,12 @@ env.read_env()
 
 app = FastAPI(
     title='Project Assistant',
-    version='0.2.1',
+    version='0.3.0',
     description='Rest API для Trello API и Google Drive API')
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['http://localhost:8080'],  # Vue
+    allow_origins=['*'],  # Vue
     allow_credentials=True,
     allow_methods=['*'],
     allow_headers=['*'],
@@ -101,8 +101,9 @@ def archive_cards(token: str = Depends(auth_scheme)) -> dict:
         
 @app.post('/upload')
 def move_document_to_folder(token: str = Depends(auth_scheme)) -> dict:
+    """Создает документ в папке Google Drive на основании Trello API."""
     try:
-        services.move_document_to_folder()
+        services.upload_document_to_folder()
         return JSONResponse(
             content='Документ добавлен в Google Drive архив')
     except Exception as e:
