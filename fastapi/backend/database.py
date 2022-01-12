@@ -8,24 +8,40 @@ db = client['main']
 class Database:
 
     @staticmethod
-    def insert(item: dict):
+    def insert_tokens(item: dict):
         try:
             db.tokens.insert_one(item)  # insert_meny()
             return 'запись создана'
         except Exception as e:
             return f'ошибка: {e}'
+        
+    @staticmethod
+    def insert_files(item: dict):
+        try:
+            db.files.replace_one(item, upsert=True)  # insert_meny()
+            return 'запись создана'
+        except Exception as e:
+            return f'ошибка: {e}'
+    
 
     @staticmethod
-    def find_all_collections():
+    def find_all_files():
         try:
-            return db.tokens.find()
+            return db.files.find()
         except Exception as e:
             pass
 
     @staticmethod
-    def find(request: dict):
+    def find_tokens(request: dict):
         try:
             return db.tokens.find_one(request)
+        except Exception as e:
+            return f'ошибка: {e}'
+        
+    @staticmethod
+    def find_file(request: dict):
+        try:
+            return db.files.find_one(request)
         except Exception as e:
             return f'ошибка: {e}'
 

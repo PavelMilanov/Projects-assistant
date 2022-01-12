@@ -7,6 +7,7 @@ sys.path.append(PATH)
 
 from trello_app.api import google_docs, trello_request 
 from .scheduller import scheduler
+from .database import Database
 
 trello = trello_request.TrelloManager()
 google_doc = google_docs.GoogleDocsManager()
@@ -36,9 +37,17 @@ def clear_doc():
 @scheduler.scheduled_job('cron', day_of_week='tue',
                          hour='15', id='4')
 def download_doc():
-    google_doc.download_document()
+    filename = google_doc.download_document()
+    Database.insert_files({'name': filename})
 
 @scheduler.scheduled_job('cron', day_of_week='tue',
                           hour='14', id='1')
 def archive_cards():
     trello.archive_done_cards()
+    
+def upload_document_to_folder():
+    try:
+        filename = Database.find_all_files()[0]
+        google_doc.upload_document_to_google_drive_folder(filename)
+    except Exception as e:
+        pass

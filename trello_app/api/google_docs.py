@@ -4,7 +4,7 @@ import httplib2
 from datetime import datetime
 from googleapiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
-from googleapiclient.http import MediaIoBaseDownload
+from googleapiclient.http import MediaIoBaseDownload, MediaFileUpload
 from environs import Env
 
 
@@ -156,14 +156,27 @@ class GoogleDocsManager:
     def download_document(self):
         current_directory = f'{os.getcwd()}/archive/' # /archive/
         date = datetime.date(datetime.now())
-        
+        filename = f'отчет {date}.docx'
         request = drive_service.files().export_media(fileId=env('DOCUMENT_ID'),
             mimeType='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-        fh = io.FileIO(f'{current_directory}отчет {date}.docx', 'wb')
+        fh = io.FileIO(current_directory + filename, 'wb')
         downloader = MediaIoBaseDownload(fh, request)
         done = False
         while done is False:
             done = downloader.next_chunk()
+        return filename
+    
+    def upload_document_to_google_drive_folder(self, filename):
+        current_directory = f'{os.getcwd()}/archive/{filename}'
+        file_metadata = {
+            'name': f'{filename}',
+            'parents': [env('FOLDER_ID')]
+        }
+        media = MediaFileUpload(current_directory,
+                                resumable=True)
+        drive_service.files().create(body=file_metadata,
+                                        media_body=media,
+                                        fields='id').execute()
         
     @generate_doc
     def clear(self) -> dict:
