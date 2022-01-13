@@ -16,10 +16,10 @@ class Database:
             return f'ошибка: {e}'
         
     @staticmethod
-    def insert_files(item: dict):
+    def replace_files(item1: dict, item2: dict):
         try:
-            db.files.insert_one(item)  # insert_meny()
-            return 'запись создана'
+            db.files.replace_one(item1, item2, True)
+            return 'запись обновлена'
         except Exception as e:
             return f'ошибка: {e}'
     
@@ -46,22 +46,8 @@ class Database:
             return f'ошибка: {e}'
 
     @staticmethod
-    def update(old_document: dict, new_document: dict):
-        try:
-            return db.tokens.update_one(old_document, new_document)
-        except Exception as e:
-            return f'ошибка: {e}'
-
-    @staticmethod
     def delete_token(request: dict):
         try:
             db.tokens.delete_one(request)
-        except Exception as e:
-            return f'ошибка: {e}'
-        
-    @staticmethod
-    def delete_file(request: dict):
-        try:
-            db.files.delete_one(request)
         except Exception as e:
             return f'ошибка: {e}'
