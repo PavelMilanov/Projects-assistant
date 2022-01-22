@@ -1,8 +1,15 @@
-from config import dp
-from aiogram.dispatcher import FSMContext
-from aiogram.types import Message, CallbackQuery, ContentType
+from config import dp, env
+from aiogram.types import CallbackQuery
 
 
-@dp.message_handler()
-async def echo(message: Message):
-    await message.answer(f'текст: {message.text}, id: {message.from_user.id}')
+@dp.callback_query_handler(text='new_order')
+async def echo(call: CallbackQuery):
+    link = env('DOCUMENT_LINK')
+    await call.answer(cache_time=5)
+    await call.message.answer(f'{link}', disable_web_page_preview=False)
+    
+@dp.callback_query_handler(text='orders')
+async def echo(call: CallbackQuery):
+    link = env('FOLDER_LINK')
+    await call.answer(cache_time=5)
+    await call.message.answer(f'{link}', disable_web_page_preview=False)

@@ -1,10 +1,16 @@
 import handlers
 from config import dp
 from aiogram import executor
+import sys
+import os
 
+PATH = os.getcwd()
+sys.path.append(PATH)
+
+from server.backend import logging
 
 async def on_startup(dp):
-    print('Starting bot')
+    logging.logger.info("Бот запущен")
     
 
 if __name__ == "__main__":
