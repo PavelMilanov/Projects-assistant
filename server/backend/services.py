@@ -25,8 +25,9 @@ def generate_doc():
     request = google_doc.generate_text(
         text1, text2, text3, text4)
     lists = google_doc.generate_paragraph_bullets()
+    header = google_doc.generate_header()
     style = google_doc.generate_styles()
-    google_doc.write(request, lists, style)
+    google_doc.write(header, request, lists, style)
  
 @scheduler.scheduled_job('cron', day_of_week='mon', hour='9', id='3')  # noqa E501
 def clear_doc():

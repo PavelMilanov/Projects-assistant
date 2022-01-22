@@ -34,6 +34,7 @@ class GoogleDocsManager:
     paragraph1 = 'Отчет о выполненных задачах за неделю'
     paragraph2 = 'Выполнены:\n'
     paragraph3 = 'Выполнены, но не проверены:\n'
+    header = 'отчет сгенерирован автоматически'
     TEXT = f'{paragraph1}\n{paragraph2}'
     DEFAULT = TEXT
     document_index = len(TEXT)
@@ -110,11 +111,25 @@ class GoogleDocsManager:
                 {
                     'insertText': {
                         'location': {
-                            'index': 1,
+                            'index': 1
                         },
                         'text': self.TEXT
                     }
                 }]
+        
+    def generate_header(self):
+        """Generate header."""
+        return [
+            {
+                'insertText': {
+                    'location': {
+                        'segmentId': 'kix.o3z3ugss49wv',
+                        'index': 0
+                    },
+                    'text': self.header
+                },
+            }
+        ]
 
     def generate_styles(self) -> list:
         """Set style for text in document."""
@@ -170,6 +185,25 @@ class GoogleDocsManager:
                         },
                         'fields': '*'
                 }
+            },
+            {
+                'updateTextStyle': {
+                    'range': {
+                        'segmentId': 'kix.o3z3ugss49wv',
+                        'startIndex': 0,
+                        'endIndex': len(self.header)
+                    },
+                    'textStyle': {
+                        'fontSize': {
+                            'magnitude': 10,
+                            'unit': 'PT'
+                        },
+                        'weightedFontFamily': {
+                            'fontFamily': 'Times New Roman'
+                        }
+                    },
+                    'fields': '*'
+                }
             }
             ]
         
@@ -208,13 +242,24 @@ class GoogleDocsManager:
         self.end_list1_index = 0
         self.start_list2_index = 0
         self.end_list2_index = 0
-        return {
-                'deleteContentRange': {
-                    'range': {
-                        'startIndex': 1,
-                        'endIndex': last_index - 1
+        return [
+                {
+                    'deleteContentRange': {
+                        'range': {
+                            'startIndex': 1,
+                            'endIndex': last_index - 1
+                        }
                     }
-                }}
+                },
+                {
+                    'deleteContentRange': {
+                        'range': {
+                            'segmentId': 'kix.o3z3ugss49wv',
+                            'startIndex': 0,
+                            'endIndex': len(self.header)
+                        }
+                    }
+                }]
 
     @generate_doc
     def write(self, *args) -> list:
