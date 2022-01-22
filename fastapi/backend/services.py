@@ -12,7 +12,7 @@ from .database import Database
 trello = trello_request.TrelloManager()
 google_doc = google_docs.GoogleDocsManager()
 
-@scheduler.scheduled_job('cron', day_of_week='mon', hour='18',id='2')  # noqa E501
+@scheduler.scheduled_job('cron', day_of_week='mon', hour='20',id='2')  # noqa E501
 def generate_doc():
     text1 = google_doc._generate_tasks_for_document(
         trello.get_done_cards())
