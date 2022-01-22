@@ -6,10 +6,10 @@ from apscheduler.events import EVENT_JOB_EXECUTED, EVENT_JOB_ERROR
 scheduler = BackgroundScheduler()
 
 def job_listener(event):
-    try:
-        logger.info(f'{event} выполнен')
-    except Exception as e:
-        logger.error(f'{event} не выполнен')
+    if event.exception:
+        logger.error(f'{event.exception}')
+    else:
+        logger.info(f'задача выполнена')
 
 scheduler.start()
 scheduler.add_listener(job_listener, EVENT_JOB_EXECUTED | EVENT_JOB_ERROR)
