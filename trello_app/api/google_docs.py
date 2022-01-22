@@ -83,7 +83,7 @@ class GoogleDocsManager:
             tasks = self._create_list_tasks(cards)
             text = ''
             for item in tasks:
-                text += f'{item}\n'
+                text += f'{item};\n'
             self.end_list_idx = self.start_list_idx + len(text)
             return text
 
@@ -116,7 +116,7 @@ class GoogleDocsManager:
                     }
                 }]
 
-    def generate_styles(self):
+    def generate_styles(self) -> list:
         """Set style for text in document."""
 
         return [
@@ -137,7 +137,7 @@ class GoogleDocsManager:
                 'updateTextStyle': {
                         'range': {
                             'startIndex': 1,
-                            'endIndex': len(self.paragraph1) + 1
+                            'endIndex': len(self.paragraph1+self.paragraph2) + 1
                         },
                         'textStyle': {
                             'bold': True,
@@ -151,9 +151,29 @@ class GoogleDocsManager:
                         },
                         'fields': '*'
                 }
-            }]
+            },
+            {
+                'updateTextStyle': {
+                        'range': {
+                            'startIndex': self.start_list2_index-28,
+                            'endIndex': self.start_list2_index
+                        },
+                        'textStyle': {
+                            'bold': True,
+                            'weightedFontFamily': {
+                            'fontFamily': 'Times New Roman'
+                        },
+                            'fontSize': {
+                                'magnitude': 14,
+                                'unit': 'PT'
+                            }
+                        },
+                        'fields': '*'
+                }
+            }
+            ]
         
-    def download_document(self):
+    def download_document(self) -> str:
         current_directory = f'{os.getcwd()}/archive/' # /archive/
         date = datetime.date(datetime.now())
         filename = f'отчет {date}.docx'
