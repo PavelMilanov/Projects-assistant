@@ -12,7 +12,7 @@ async def report_generated_order():
     await bot.send_message(chat_id=user1, text=f'сгенерирован новый отчет', reply_markup=report('new_order'))
     await bot.send_message(chat_id=user2, text=f'сгенерирован новый отчет', reply_markup=report('new_order'))
     
-@scheduler.scheduled_job('cron', day_of_week='tue', hour='15', id='2')
+@scheduler.scheduled_job('cron', day_of_week='tue', hour='15', minute='2', id='2')
 async def report_generated_order():
     user = env.list('ADMINS')[1]
     await bot.send_message(chat_id=user, text=f'отчет сформирован и загружен в архив', reply_markup=report('orders'))
