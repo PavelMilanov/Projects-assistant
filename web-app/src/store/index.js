@@ -18,8 +18,9 @@ export default createStore({
     ,
   },
   mutations: {
-    SET_USER_TOKEN: (state, data) => {
+    SET_USER_IS_AUTH: (state, data) => {
       state.user.token = data
+      state.user.is_authenticated = true
     },
     SET_INFO: (state, data) => {
       state.info = data
@@ -38,8 +39,8 @@ export default createStore({
                 'username': data.username,
                 'password': data.password
             })
-        }).then( response => {
-          context.commit('SET_USER_TOKEN', response.data);
+      }).then(response => {
+          context.commit('SET_USER_IS_AUTH', response.data);
         }).catch( error => {
             console.log(error);
         })

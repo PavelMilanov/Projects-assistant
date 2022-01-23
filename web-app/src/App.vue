@@ -28,7 +28,7 @@ export default {
   data() {
         return {
           // для стиля компонента vForm
-          status: 'hidden',
+          status: 'hidden'
         }
     },
   components: {

@@ -1,12 +1,12 @@
 <template>
-    <div class="Main">
+    <div class="Main" v-if="main_auth">
         <div>
             <p>This is the main menu</p>
         </div>
         <div>
             <div class="main-menu">
                 <div class="status-bar">
-                    <p>{{status_text ? status_text : ''}}</p>
+                    <p>{{text_status}}</p>
                 </div>
                 <li class="list-menu">
                     <button
@@ -29,14 +29,17 @@
             </div>
         </div>
     </div>
+    <div v-else>
+        Необходима авторизация
+    </div>
 </template>
+
 
 <script>
 
 export default {
     data() {
         return {
-            status_text: this.$store.getters.GET_INFO,
             token: this.$store.getters.GET_USER.token
         }
     },
@@ -54,6 +57,14 @@ export default {
         archive_cards() {
             this.$store.dispatch('ARCHIVE_CARDS', this.token);
         },
+    },
+    computed: {
+        main_auth() {
+            return this.$store.getters.GET_USER.is_authenticated
+        },
+        text_status() {
+            return this.$store.getters.GET_INFO
+        }
     }
 }
 </script>
