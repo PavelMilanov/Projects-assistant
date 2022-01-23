@@ -46,7 +46,6 @@ export default {
     methods: {
         generate_doc() {
             this.$store.dispatch('GENERATE_DOCUMENT', this.token);
-            let test = setTimeout(() => console.log(this.$store.getters.GET_INFO), 10)
         },
         clear_doc() {
             this.$store.dispatch('CLEAR_DOCUMENT', this.token);
