@@ -78,6 +78,17 @@ export default createStore({
         console.log(error)
       })
     },
+    UPLOAD: async (context, data) => {
+      await axios({
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${data}` },
+        url: 'http://localhost:8000/upload'
+      }).then(response => {
+        context.commit('SET_INFO', response.data)
+      }).catch(error => {
+        console.log(error)
+      })
+    },
     ARCHIVE_CARDS: async (context, data) => {
       await axios({
         method: 'POST',

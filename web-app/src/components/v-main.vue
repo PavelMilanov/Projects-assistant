@@ -11,7 +11,7 @@
                 <li class="list-menu">
                     <button
                         @click="generate_doc()" 
-                        class="menu-btn">Сделать отчет
+                        class="menu-btn">Сгенерировать документ
                     </button>
                     <button
                         @click="archive_cards()" 
@@ -19,7 +19,11 @@
                     </button>
                     <button
                         @click="download_doc()" 
-                        class="menu-btn">Отправить документ в архив
+                        class="menu-btn">Загрузить на сервер
+                    </button>
+                    <button
+                        @click="upload_doc()" 
+                        class="menu-btn">Выгрузить в Google Drive
                     </button>
                     <button
                         @click="clear_doc()" 
