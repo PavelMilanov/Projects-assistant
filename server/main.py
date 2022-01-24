@@ -23,9 +23,9 @@ app.add_middleware(
     allow_headers=['*'],
 )
 
-auth_scheme = OAuth2PasswordBearer(tokenUrl='/login')
+auth_scheme = OAuth2PasswordBearer(tokenUrl='/api/login')
 
-@app.post('api/login')
+@app.post('/api/login')
 def login_url(form: OAuth2PasswordRequestForm = Depends()) -> str:
     """Генерирует персональный токен."""
     login, password = form.username, form.password
@@ -51,7 +51,7 @@ def login_url(form: OAuth2PasswordRequestForm = Depends()) -> str:
             logging.logger.info(f'{login} успешно авторизован')
             return access_token
     
-@app.get('api/generate')
+@app.get('/api/generate')
 def generate_doc(token: str = Depends(auth_scheme)) -> dict:
     """Генериует google document на основании Trello API и Google Drive API."""
     try:
@@ -63,7 +63,7 @@ def generate_doc(token: str = Depends(auth_scheme)) -> dict:
         return JSONResponse(
             content=f'{e}')
 
-@app.get('api/clear')  # тестовый режим
+@app.get('/api/clear')  # тестовый режим
 def clear_doc(token: str = Depends(auth_scheme)) -> dict:
     """Стирает все данные google document на основании Trello API и Google Drive API."""
     try:
@@ -75,7 +75,7 @@ def clear_doc(token: str = Depends(auth_scheme)) -> dict:
         return JSONResponse(
             content=f'{e}')
 
-@app.get('api/download')
+@app.get('/api/download')
 def download_doc(token: str = Depends(auth_scheme)) -> dict:
     """Скачивает google document на сервер на основании Google Drive API."""
     try:
@@ -87,7 +87,7 @@ def download_doc(token: str = Depends(auth_scheme)) -> dict:
         return JSONResponse(
             content=f'{e}')
 
-@app.post('api/archive')
+@app.post('/api/archive')
 def archive_cards(token: str = Depends(auth_scheme)) -> dict:
     """Архивирует все карточки в колонке Trello на основании Trello API."""
     try:
@@ -99,7 +99,7 @@ def archive_cards(token: str = Depends(auth_scheme)) -> dict:
         return JSONResponse(
             content=f'{e}')
         
-@app.post('api/upload')
+@app.post('/api/upload')
 def move_document_to_folder(token: str = Depends(auth_scheme)) -> dict:
     """Создает документ в папке Google Drive на основании Trello API."""
     try:
