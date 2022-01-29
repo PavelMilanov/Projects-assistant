@@ -1,4 +1,4 @@
-# Приложение автоматизирует работу с сервисами Trello и Google Docs.
+## Приложение автоматизирует работу с сервисами Trello и Google Docs.
     
 ### Frontend: [Vue3](https://v3.vuejs.org)
 ### Backend: [FastAPI](https://fastapi.tiangolo.com)

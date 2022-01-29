@@ -1,8 +1,8 @@
 <template>
   <div class="App">
       <header>
-        <p>header</p>
-        <button
+        <p class="header-name">Project Assistant v0.1.1</p>
+        <button class="header-button"
           @click="openForm()"
           >Log In
         </button>

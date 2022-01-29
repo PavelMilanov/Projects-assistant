@@ -57,9 +57,10 @@ export default {
 </script>
 
 <style lang="less">
+@import "../main.less";
 
 .Form {
-    position: absolute;
+    position: fixed;
     left: 25%;
     top: 25%;
     width: 20em;
@@ -68,7 +69,8 @@ export default {
     display : grid;
     justify-items: center;
     padding-top: 3em;
-    z-index: 2;
+    z-index: 200;
+    background-color: @main-popap-color;
     
     .form-input {
         height: 30%;

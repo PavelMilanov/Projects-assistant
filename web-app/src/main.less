@@ -1,12 +1,29 @@
+@main-back-color: rgb(238, 237, 237);
+@main-popap-color: rgb(194, 194, 194);
+@main-font: 'Baloo 2', cursive;
+
 body {
     margin: 0;
     min-height: 100vh;
+    background-color: @main-back-color;
+    font-family: @main-font;
 }
 
 header {
+    height: 4em;
     display: flex;
     justify-content: space-around;
-    border-bottom: 1px solid black;
+    align-items: center;
+
+    .header-name {
+        font-size: 20px;
+    }
+
+    .header-button {
+        height: 3em;
+        width: 5em;
+        font-size: 15px;
+    }
 }
 
 main {
@@ -16,6 +33,7 @@ main {
 
 .Asside,
 .Main {
+    border: 1px solid black;
     min-height: 100vh;
     z-index: 1;
 }

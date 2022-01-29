@@ -1,7 +1,7 @@
 <template>
     <div class="Main" v-if="main_auth">
-        <div>
-            <p>This is the main menu</p>
+        <div class="main-header">
+            <p>Блок управления</p>
         </div>
         <div>
             <div class="main-menu">
@@ -73,12 +73,17 @@ export default {
 </script>
 
 <style lang="less">
+
+.main-header {
+    text-align: center;
+}
+
 .main-menu {
     min-height: 100vh;
 
     .list-menu {
-        margin-top: 0.5em;
-        margin-bottom: 0.5em;
+        margin-top: 1em;
+        margin-bottom: 1em;
         display: grid;
         gap: 1em;
         justify-items: center;
@@ -87,9 +92,15 @@ export default {
             width: 10em;
             text-align: center;
         }
+
+        .menu-btn {
+            width: 11em;
+            height: 3em;
+        }
     }
 
     .status-bar {
+        height: 4em;
         text-align: center;
     }
 }

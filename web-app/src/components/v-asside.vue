@@ -1,7 +1,7 @@
 <template>
     <div class="Asside" v-if="asside_auth">
-        <div>
-            <p>This is the status bar</p>
+        <div class="asside-header">
+            <p>Блок мониторинга</p>
         </div>
         <main>
             <div class="asside-menu">
@@ -31,5 +31,9 @@ export default {
 </script>
 
 <style lang="less">
+
+.asside-header {
+    text-align: center
+}
 
 </style>
