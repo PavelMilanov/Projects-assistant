@@ -8,7 +8,7 @@ from keyboards.inline import report
 @scheduler.scheduled_job('cron', day_of_week='mon', hour='20', id='1')
 async def report_generated_order():
     user1 = env.list('ADMINS')[0]
-    user2 = env.list('ADMINS')[1]
+    user2 = env.list('ADMINS')[2]
     await bot.send_message(chat_id=user1, text=f'сгенерирован новый отчет', reply_markup=report('new_order'))
     await bot.send_message(chat_id=user2, text=f'сгенерирован новый отчет', reply_markup=report('new_order'))
     
