@@ -10,6 +10,6 @@ async def echo(call: CallbackQuery):
     
 @dp.callback_query_handler(text='orders')
 async def echo(call: CallbackQuery):
-    link = env('FOLDER_LINK')
+    link = env('DOCUMENTS_LINK')
     await call.answer(cache_time=5)
     await call.message.answer(f'{link}', disable_web_page_preview=False)
