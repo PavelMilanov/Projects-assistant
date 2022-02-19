@@ -36,5 +36,5 @@ async def get_last_order(message: Message):
 
 @dp.message_handler(commands='full_orders')
 async def get_folder(message: Message):
-    link = env('FOLDER_LINK')
+    link = env('DOCUMENTS_LINK')
     await message.answer(f'Общий отчет:\n{link}')
