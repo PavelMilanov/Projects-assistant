@@ -60,6 +60,9 @@ export default {
         archive_cards() {
             this.$store.dispatch('ARCHIVE_CARDS', this.token);
         },
+        upload_doc() {
+            this.$store.dispatch('UPLOAD_DOCUMENT', this.token)
+        }
     },
     computed: {
         main_auth() {
