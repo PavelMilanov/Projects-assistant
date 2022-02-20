@@ -60,7 +60,7 @@ export default createStore({
       await axios({
         method: 'GET',
         headers: { 'Authorization': `Bearer ${data}` },
-        url: 'http://7localhost/clear'
+        url: 'http://localhost/clear'
       }).then(response => {
         context.commit('SET_INFO', response.data)
       }).catch(error => {
