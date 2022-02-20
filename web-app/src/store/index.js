@@ -78,7 +78,7 @@ export default createStore({
         console.log(error)
       })
     },
-    UPLOAD: async (context, data) => {
+    UPLOAD_DOCUMENT: async (context, data) => {
       await axios({
         method: 'POST',
         headers: { 'Authorization': `Bearer ${data}` },
