@@ -94,7 +94,7 @@ class GoogleDocsManager:
         try:
             self.TEXT += text[0]  # карточки Done PROD
         except TypeError:
-            self.TEXT += 'Выполненных задач нет'
+            self.TEXT += 'Выполненных задач нет;\n'
         self.end_list1_index = len(self.TEXT)
         self.TEXT += self.paragraph3
         self.start_list2_index = len(self.TEXT)
