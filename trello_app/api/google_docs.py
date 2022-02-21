@@ -1,5 +1,6 @@
 import io
 import os
+from types import NoneType
 import httplib2
 from datetime import datetime
 from googleapiclient.discovery import build
@@ -90,21 +91,24 @@ class GoogleDocsManager:
 
     def generate_text(self, *text) -> list:
         """Generate paragraph1-2."""
-        self.TEXT += text[0]  # карточки Done PROD
+        try:
+            self.TEXT += text[0]  # карточки Done PROD
+        except TypeError:
+            self.TEXT += ''
         self.end_list1_index = len(self.TEXT)
         self.TEXT += self.paragraph3
         self.start_list2_index = len(self.TEXT)
         try:
             self.TEXT += text[1]  # карточки Testing PROD
-        except Exception:
+        except TypeError:
             self.TEXT += ''
         try:
             self.TEXT += text[2]  # карточки Deploy PROD
-        except Exception:
+        except TypeError:
             self.TEXT += ''
         try:
             self.TEXT += text[3]  # карточки Testing DEV
-        except Exception:
+        except TypeError:
             self.TEXT += ''
         self.end_list2_index = len(self.TEXT)
         return [    
