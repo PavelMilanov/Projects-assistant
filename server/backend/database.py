@@ -53,8 +53,8 @@ class Database:
             return f'ошибка: {e}'
         
     @staticmethod
-    def delete_file(request: dict):
+    def delete_file():
         try:
-            db.files.delete_one(request)
+            db.files.drop()
         except Exception as e:
             return f'ошибка: {e}'

@@ -52,4 +52,4 @@ def upload_document_to_folder():
         'marker': 'отчет'
     })
     google_doc.upload_document_to_google_drive_folder(filename['name'])
-    Database.delete_file(filename['name'])
+    Database.delete_file()
