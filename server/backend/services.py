@@ -23,7 +23,7 @@ def generate_doc():
     text4 = google_doc._generate_tasks_for_document(
         trello.get_testing_dev_cards())
     request = google_doc.generate_text(
-        text1, text2, text3, text4)
+        text1, text2)
     lists = google_doc.generate_paragraph_bullets()
     header = google_doc.generate_header()
     style = google_doc.generate_styles()
@@ -35,6 +35,7 @@ def clear_doc():
 
 @scheduler.scheduled_job('cron', day_of_week='tue', hour='15', id='4')  # noqa E501
 def download_doc():
+    Database.delete_file()
     file = google_doc.download_document()
     # file = 'отчет 2022-01-13.docx'
     name = file.split(' ')[0]
