@@ -1,7 +1,11 @@
 from pymongo import MongoClient
+from environs import Env
 
 
-client = MongoClient('localhost', 27017)
+env = Env()
+env.read_env()
+
+client = MongoClient(f"mongodb://{env('DB_USER')}:{env('DB_PASSWORD')}@mongodb")
 db = client['main']
 
 
