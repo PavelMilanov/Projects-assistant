@@ -1,4 +1,0 @@
-[flake8]
-ignore = D100, D201, A002, A003
-
-docker run -p 8000:8000  --name fastapi --rm  server:v1
