@@ -1,11 +1,13 @@
-FROM node:16
+FROM node:14.17.6 as build
 
-COPY . /web
-
-WORKDIR /web
-
+COPY ./ .
 RUN npm install
-
 RUN npm run build
 
-#/dist - static files
+FROM nginx:stable
+
+RUN mkdir /www
+COPY --from=build dist/ www/
+COPY nginx.conf /etc/nginx/nginx.conf
+
+EXPOSE 80
