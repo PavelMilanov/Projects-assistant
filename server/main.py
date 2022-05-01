@@ -49,7 +49,8 @@ def login_url(form: OAuth2PasswordRequestForm = Depends()) -> str:
                 'password': password,
                 'access_token': access_token})
             logging.logger.info(f'{login} успешно авторизован')
-            return access_token
+            return JSONResponse(
+            content='Success')
     
 @app.get('/api/generate')
 def generate_doc(token: str = Depends(auth_scheme)) -> dict:
