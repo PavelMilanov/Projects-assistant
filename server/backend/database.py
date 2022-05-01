@@ -1,11 +1,12 @@
 from pymongo import MongoClient
 from environs import Env
-
+from .logging import logger
 
 env = Env()
 env.read_env()
 
-client = MongoClient(f"mongo+srv://{env('DB_USERNAME')}:{env('DB_PASSWORD')}@mongodb")
+client = MongoClient(f"mongodb://mongo/main")
+logger.info(client)
 db = client['main']
 
 
