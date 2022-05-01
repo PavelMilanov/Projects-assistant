@@ -5,7 +5,7 @@ from environs import Env
 env = Env()
 env.read_env()
 
-client = MongoClient(f"mongo+srv://{env('DB_USER')}:{env('DB_PASSWORD')}@mongodb")
+client = MongoClient(f"mongo+srv://{env('DB_USERNAME')}:{env('DB_PASSWORD')}@mongodb")
 db = client['main']
 
 
