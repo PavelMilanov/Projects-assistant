@@ -5,37 +5,36 @@ services:
     container_name: fastapi
     build: ./
     restart: always
-    ports:
-      - 8000:8000
+    expose:
+      - "8000"
     networks:
       - net
     depends_on:
       - mongo
+    volumes:
+     - ./logs:/debug/
 
   mongo:
     container_name: mongo
     image: mongo:5.0
     restart: always
-    env_file:
-      - .env
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: $DB_USERNAME
-      MONGO_INITDB_ROOT_PASSWORD: $DB_PASSWORD
     ports:
      - 27017:27017
     networks: 
       - net
     volumes:
-      - dbdata:/data/db
+      - ./dbdata:/data/db
 
-    web:
-      container_name: web
-      build: web-app/.
-      restart: always
-      ports:
-       - 80:80
-      networks:
-       - net
+  web:
+    container_name: vue3
+    build: web-app/.
+    restart: always
+    ports:
+      - 80:80
+    networks:
+      - net
+    depends_on:
+      - server
 
 networks:
   net:
