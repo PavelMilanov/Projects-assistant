@@ -12,3 +12,8 @@
       become: yes
       shell:
         cmd: cd app/ && docker compose build
+
+    - name: Start Application
+      become: yes
+      shell:
+        cmd: cd app/ && docker compose up -d
