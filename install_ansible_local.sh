@@ -23,3 +23,4 @@ python3.8 -m virtualenv app
 
 source app/bin/activate
 pip install ansible-core==2.11.11
+# ansible-galaxy collection install community.docker

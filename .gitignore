@@ -1,11 +1,3 @@
-.env
 .venv
-web-app/node_modules
-web-app/package-lock.json
-web-app/dist
-poetry.lock
-.DS_Store*
-__pycache__
-debug
-archive
-token.json
+hosts.conf
+.DS_Store

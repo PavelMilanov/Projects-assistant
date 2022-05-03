@@ -2,24 +2,36 @@
 - name: Install Docker and Docker-compose
   hosts: centos
   become: yes
+  gather_facts: no
   # run with -K argument(ass-become-pass)
   tasks:
     - name: update packages
-      command: yum update -y
+      yum:
+        name: '*'
+        state: latest
 
-    - name: install utilities 
-      command: yum install -y yum-utils
-      
-    - name: add repo
-      command: yum-config-manager \
-               --add-repo \
-               https://download.docker.com/linux/centos/docker-ce.repo
+    - name: install yum-utils
+      yum:
+        name: yum-utils
+        state: latest
+
+    - name: add Docker repo
+      get_url:
+        url: https://download.docker.com/linux/centos/docker-ce.repo
+        dest: /etc/yum.repos.d/docker-ce.repo
 
     - name: install docker-engine, docker and docker-compose
-      command: yum install docker-ce \ 
-               docker-ce-cli containerd.io \
-              docker-compose-plugin -y
+      yum:
+        name: "{{ item }}"
+        state: latest
+      with_items:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+        - docker-compose-plugin
 
     - name: enable docker daemon
-      command: systemctl enable docker
-      command: systemctl start docker
+      service:
+        name: docker
+        state: started
+        enabled: yes

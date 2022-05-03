@@ -34,7 +34,7 @@ export default createStore({
       await axios({
             method: 'POST',
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
-            url: 'http://localhost/api/login',
+            url: 'http://0.0.0.0/api/login',
             data: qs.stringify({
                 'username': data.username,
                 'password': data.password
@@ -49,7 +49,7 @@ export default createStore({
       await axios({
         method: 'GET',
         headers: { 'Authorization': `Bearer ${data}`},
-        url: 'http://localhost/api/generate'
+        url: 'http://0.0.0.0/api/generate'
       }).then(response => {
         context.commit('SET_INFO', response.data)
       }).catch(error => {
@@ -60,7 +60,7 @@ export default createStore({
       await axios({
         method: 'GET',
         headers: { 'Authorization': `Bearer ${data}` },
-        url: 'http://localhost/api/clear'
+        url: 'http://0.0.0.0/api/clear'
       }).then(response => {
         context.commit('SET_INFO', response.data)
       }).catch(error => {
@@ -71,7 +71,7 @@ export default createStore({
       await axios({
         method: 'GET',
         headers: { 'Authorization': `Bearer ${data}` },
-        url: 'http://localhost/api/download'
+        url: 'http://0.0.0.0/api/download'
       }).then(response => {
         context.commit('SET_INFO', response.data)
       }).catch(error => {
@@ -82,7 +82,7 @@ export default createStore({
       await axios({
         method: 'POST',
         headers: { 'Authorization': `Bearer ${data}` },
-        url: 'http://localhost/api/upload'
+        url: 'http://0.0.0.0/api/upload'
       }).then(response => {
         context.commit('SET_INFO', response.data)
       }).catch(error => {
@@ -93,7 +93,7 @@ export default createStore({
       await axios({
         method: 'POST',
         headers: { 'Authorization': `Bearer ${data}` },
-        url: 'http://localhost/api/archive'
+        url: 'http://0.0.0.0/api/archive'
       }).then(response => {
         context.commit('SET_INFO', response.data)
       }).catch(error => {

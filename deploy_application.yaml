@@ -1,0 +1,14 @@
+---
+- name: Deploy Application on remoute server
+  hosts: centos
+  gather_facts: no
+  tasks: 
+    - name: Copy Project
+      copy:
+        src: app/
+        dest: app/
+
+    - name: Build Application
+      become: yes
+      shell:
+        cmd: cd app/ && docker compose build
