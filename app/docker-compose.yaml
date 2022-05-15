@@ -14,6 +14,15 @@ services:
     volumes:
      - ./logs:/debug/
 
+  bot:
+    container_name: telegram-bot
+    build: aiogrambot/.
+    restart: always
+    networks:
+     - net
+    depends_on:
+     - server
+
   mongo:
     container_name: mongo
     image: mongo:5.0

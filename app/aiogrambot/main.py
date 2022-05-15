@@ -7,10 +7,11 @@ import os
 PATH = os.getcwd()
 sys.path.append(PATH)
 
-from server.backend import logging
+# from server.backend import logging
 
 async def on_startup(dp):
-    logging.logger.info("Бот запущен")
+    # logging.logger.info("Бот запущен")
+    pass
     
 
 if __name__ == "__main__":

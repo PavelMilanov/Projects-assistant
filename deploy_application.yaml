@@ -1,6 +1,6 @@
 ---
 - name: Deploy Application on remoute server
-  hosts: centos
+  hosts: deploy
   gather_facts: no
   tasks: 
     - name: Copy Project

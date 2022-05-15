@@ -64,7 +64,7 @@ def generate_doc(token: str = Depends(auth_scheme)) -> dict:
         return JSONResponse(
             content=f'{e}')
 
-@app.get('/api/clear')  # тестовый режим
+@app.get('/api/clear')
 def clear_doc(token: str = Depends(auth_scheme)) -> dict:
     """Стирает все данные google document на основании Trello API и Google Drive API."""
     try:

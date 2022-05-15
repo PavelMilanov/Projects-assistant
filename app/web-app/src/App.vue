@@ -28,7 +28,7 @@ export default {
   data() {
         return {
           // для стиля компонента vForm
-          status: 'hidden'
+          status: 'hidden',
         }
     },
   components: {
@@ -44,6 +44,7 @@ export default {
 
     closeForm() {
       this.status = 'hidden';
+      console.log(process.env.SERVER_IP, '-')
     }
 
   },

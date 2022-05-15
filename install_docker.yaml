@@ -1,6 +1,6 @@
 ---
 - name: Install Docker and Docker-compose
-  hosts: centos
+  hosts: deploy
   become: yes
   gather_facts: no
   # run with -K argument(ass-become-pass)

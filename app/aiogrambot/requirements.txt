@@ -1,0 +1,4 @@
+loguru==0.5.3
+environs==9.3.5
+APScheduler==3.7.0
+aiogram==2.18
