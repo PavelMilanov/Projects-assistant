@@ -1,0 +1,28 @@
+# basic ci 
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [master]
+
+  # можно запускать вручную
+  workflow_dispatch:
+
+jobs:
+  testing:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
+    steps:
+     - uses: actions/checkout@v3
+     - name: Установка Python ${{ matrix.python-version }}
+       uses: actions/setup-python@v3
+       with:
+          python-version: ${{matrix.python-version}}
+     - name: Установка зависимостей
+       run: pip3 install flake8 flake8-builtins flake8-docstrings flake8-quotes
+       run: flake8 app/server
